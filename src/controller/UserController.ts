@@ -1,21 +1,31 @@
-import { UserService } from "../service";
-import { Request,Response } from "express";
+import { updateLanguageServiceSourceFile } from "typescript";
+import {UserServices} from "../services";
+import { Request,response,Response } from "express";
 
 export class UserController{
-    private service:UserService;
+    private service : UserServices;
 
     constructor(){
-        this.service = new UserService();
+    this.service = new UserServices();
     }
-    public list = (req:Request, res:Response)=>{
+    public list(req : Request, res : Response) {
         return res.json(this.service.list());
     }
-    public create = (req:Request,res:Response)=>{
-        console.log(req.body);
-        return res.json(this.service.create(req.body));
+    public create (req : Request, res : Response){
+        const User = req.body;
+        return res.json (this.service.criate(User));
     }
-    public delete = (req:Request,res:Response)=>{
-        console.log(req.params.id);
-        return res.json(req.params.id);
+    public findBild(req : Request, res : Response){
+       const id = req.params.id;
+        return res.json (this.service.findBild(+id));
     }
+    public delete  (req : Request, res : Response){
+        const id = req.params.id;
+        return res.json (this.service.delete(+id));
+}
+    public update (req : Request, res : Response){
+    const User = req.body;
+    return res.json (this.service.update(User));
+    }
+    
 }

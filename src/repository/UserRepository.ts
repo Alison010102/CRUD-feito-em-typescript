@@ -1,26 +1,45 @@
+import { isPrefixUnaryExpression } from "typescript";
 import { IUser } from "../models";
 
-let users:IUser [] = [];
+let User: IUser[] = [];
 
 export class UserRepository{
     public list = ()=>{
-        return users;
-    }
-    public create = (user:IUser)=>{
-        const exist = users.findIndex((u)=> user.id == u.id);
-        if (exist != -1){
-            return "Produto ja criado";
+        return User;
         }
-        users.push(user);
-        return user;
-    }
-    public delete = (id:number)=>{
-        const exist = users.findIndex((u)=> id == u.id);
-        if (exist == -1){
-            return "Produto nao encontrado";
+        public create = (NewUser : IUser) =>{
+            const exists = User.find(tmp => tmp.id == NewUser.id);
+            if(exists){
+                return "Usuário já Cadastrado.";
+            }
+            User.push(NewUser);
+            return User;
         }
-        users = users.filter ((user)=> user.id != user.id);
-        return 1;
-    }
+        public findBild = (id: number) =>{
+            const exists = User.find(tmp => tmp.id == id);
+            if(exists){
+                return exists;
+            }
+            return "Usuario Não Encontrado.";
+        }
+        public delete = (id: number) =>{
+            const index = User.findIndex(tmp => tmp.id == id);
+            if(index == -1){
+                return "Usuário Não Encontrado";
+            }
+            User = User.filter(tmp => tmp.id != id);
+            return "Usuário Removido";
+        }
+        public update = (User : IUser)=>{
+            let exists = User.find(tmp => tmp.id == User.id);
+            if(!exists){
+                return "Usuário Não Cadastrado.";
+            }
+        
+           exists = User;
+           User = User.filter(tmp => tmp.id != exists.id);
+           User.push(exists);
+           return User;
+        }
 
 }

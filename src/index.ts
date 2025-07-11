@@ -1,10 +1,9 @@
-import express from "express";
-import router from "express";
+import Express from "express";
+import router from "./router";
+const app = Express();
 
-const app = express();
+app.use(Express.json());
 
-app.use(express.json());
+app.use("/", router);
 
-app.use("/user", router);
-
-app.listen(777, ()=>{});
+app.listen(1000, ()=>{});
